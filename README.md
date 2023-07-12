@@ -4,5 +4,5 @@ I am completing this project for the Springboard Software Engineering Bootcamp. 
 
 Target skills include:
  - DOM manipulation
- - advanced array methods
+ - Advanced array methods
  - ES2015
