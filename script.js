@@ -10,7 +10,7 @@ function search(str) {
 	let userInput = str.toLowerCase();
 
 	for (let idx=0; idx<fruit.length; idx++) {
-		let currentFruit = fruit[idx];
+		let currentFruit = fruit[idx].toLowerCase();
 
 		if (currentFruit.includes(userInput)) {
 		results.push(fruit[idx]);
@@ -21,27 +21,55 @@ function search(str) {
 }
 
 function searchHandler(e) {
-	// TODO
+	const inputVal = e.target.value;
+	const results = search(inputVal);
+
+	showSuggestions(results);
 }
 
-function showSuggestions(results, inputVal) {
-	const suggestions = document.querySelector(`.suggestions ul`);
-	suggestions.innerHTML = '';
+function showSuggestions(results) {
+	const input = document.querySelector('#fruit');
+	const suggestionsContainer = document.querySelector('.suggestions');
+	const suggestionsList = suggestionsContainer.querySelector('ul');
+  
+	// Clear previous suggestions
+	suggestionsList.innerHTML = '';
+  
+	if (results.length === 0) {
+	  suggestionsContainer.style.display = 'none'; // Hide suggestions container if there are no results
+	  return;
+	}
+  
+	// Create HTML dropdown list
+	results.forEach(function (result) {
+	  const listItem = document.createElement('li');
+	  listItem.textContent = result;
+	  suggestionsList.appendChild(listItem);
+	});
+	
+	input.parentNode.appendChild(suggestionsContainer);
+	// suggestionsContainer.style.display = 'block'; // Show the suggestions container
+  }
 
-	// if (results.length === 0) {
-	// 	suggestions.style.display = 'none';
-	// 	return;
-	// } if no suggestions exist, dropdown is not displayed
+function highlightSuggestion(e) {
+	let hoveredText = e.target;
+	hoveredText.style.backgroundColor = 'pink';
+}
 
-	const dropDownHTML = results.map(result => `<li>$result</li>`).join('');
-	suggestions.innerHTML = dropDownHTML;
-
-	suggestions.style.display = 'block';
+function removeHighlight(e) {
+	const unhoveredText = e.target;
+	unhoveredText.style.backgroundColor = '';
 }
 
 function useSuggestion(e) {
-	// TODO
+	const selected = e.target.textContent;
+	input.value = selected;
+
+	suggestions.innerHTML = "";
 }
 
+
 input.addEventListener('keyup', searchHandler);
+suggestions.addEventListener('mouseover', highlightSuggestion);
+suggestions.addEventListener('mouseout', removeHighlight);
 suggestions.addEventListener('click', useSuggestion);
