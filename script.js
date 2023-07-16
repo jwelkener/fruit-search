@@ -7,6 +7,7 @@ function search(str) {
 	let results = [];
 	let userInput = str.toLowerCase();
 
+
 	for (let idx=0; idx<fruit.length; idx++) {
 		let currentFruit = fruit[idx].toLowerCase();
 
@@ -37,6 +38,7 @@ function showSuggestions(results) {
 	  suggestionsContainer.style.display = 'none'; // Hide suggestions container if there are no results
 	  return;
 	}
+
   
 	// Create HTML dropdown list
 	results.forEach(function (result) {
@@ -65,8 +67,19 @@ function useSuggestion(e) {
 	suggestions.innerHTML = "";
 }
 
+function hideSuggestions(e) {
+	const suggestionsContainer = document.querySelector('.suggestions');
+	if (
+		!e.target.closest('.suggestions') &&
+		!e.target.closest('.search-container')
+	  ){
+		suggestionsContainer.style.dispay = 'none';
+	  }
+}
+
 
 input.addEventListener('keyup', searchHandler);
 suggestions.addEventListener('mouseover', highlightSuggestion);
 suggestions.addEventListener('mouseout', removeHighlight);
 suggestions.addEventListener('click', useSuggestion);
+document.addEventListener('click', hideSuggestions);
