@@ -4,9 +4,19 @@ const suggestions = document.querySelector('.suggestions ul');
 const fruit = ['Apple', 'Apricot', 'Avocado 🥑', 'Banana', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry', 'Boysenberry', 'Currant', 'Cherry', 'Coconut', 'Cranberry', 'Cucumber', 'Custard apple', 'Damson', 'Date', 'Dragonfruit', 'Durian', 'Elderberry', 'Feijoa', 'Fig', 'Gooseberry', 'Grape', 'Raisin', 'Grapefruit', 'Guava', 'Honeyberry', 'Huckleberry', 'Jabuticaba', 'Jackfruit', 'Jambul', 'Juniper berry', 'Kiwifruit', 'Kumquat', 'Lemon', 'Lime', 'Loquat', 'Longan', 'Lychee', 'Mango', 'Mangosteen', 'Marionberry', 'Melon', 'Cantaloupe', 'Honeydew', 'Watermelon', 'Miracle fruit', 'Mulberry', 'Nectarine', 'Nance', 'Olive', 'Orange', 'Clementine', 'Mandarine', 'Tangerine', 'Papaya', 'Passionfruit', 'Peach', 'Pear', 'Persimmon', 'Plantain', 'Plum', 'Pineapple', 'Pomegranate', 'Pomelo', 'Quince', 'Raspberry', 'Salmonberry', 'Rambutan', 'Redcurrant', 'Salak', 'Satsuma', 'Soursop', 'Star fruit', 'Strawberry', 'Tamarillo', 'Tamarind', 'Yuzu'];
 
 function search(str) {
+	let results = [];
+	let userInput = str.toLowerCase();
 
-	return fruit.filter(currentFruit => currentFruit.toLowerCase().includes(str.toLowerCase()))
 
+	for (let idx=0; idx<fruit.length; idx++) {
+		let currentFruit = fruit[idx].toLowerCase();
+
+		if (currentFruit.includes(userInput)) {
+		results.push(fruit[idx]);
+	}
+	}
+
+	return results;
 }
 
 function searchHandler(e) {
@@ -20,26 +30,26 @@ function showSuggestions(results) {
 	const input = document.querySelector('#fruit');
 	const suggestionsContainer = document.querySelector('.suggestions');
 	const suggestionsList = suggestionsContainer.querySelector('ul');
-
+  
 	// Clear previous suggestions
 	suggestionsList.innerHTML = '';
-
+  
 	if (results.length === 0) {
-		suggestionsContainer.style.display = 'none'; // Hide suggestions container if there are no results
-		return;
+	  suggestionsContainer.style.display = 'none'; // Hide suggestions container if there are no results
+	  return;
 	}
 
-
+  
 	// Create HTML dropdown list
 	results.forEach(function (result) {
-		const listItem = document.createElement('li');
-		listItem.textContent = result;
-		suggestionsList.appendChild(listItem);
+	  const listItem = document.createElement('li');
+	  listItem.textContent = result;
+	  suggestionsList.appendChild(listItem);
 	});
-
+	
 	input.parentNode.appendChild(suggestionsContainer);
 	// suggestionsContainer.style.display = 'block'; // Show the suggestions container
-}
+  }
 
 function highlightSuggestion(e) {
 	let hoveredText = e.target;
@@ -62,9 +72,9 @@ function hideSuggestions(e) {
 	if (
 		!e.target.closest('.suggestions') &&
 		!e.target.closest('.search-container')
-	) {
+	  ){
 		suggestionsContainer.style.dispay = 'none';
-	}
+	  }
 }
 
 
